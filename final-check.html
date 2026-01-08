@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Последний Рубеж</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Courier New', monospace; background: #111; color: #ddd; max-width: 700px; margin: 50px auto; padding: 30px; border: 1px solid #333; text-align: center; }
+        h1 { color: #8a8; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .box { background: #1a1a1a; border: 1px solid #333; padding: 25px; margin: 25px 0; }
+        input { width: 80%; padding: 12px; background: #222; color: #ccc; border: 1px solid #444; text-align: center; font-size: 1.1em; }
+        button { background: #2a4a2a; color: #8f8; border: none; padding: 15px 30px; font-size: 1.1em; cursor: pointer; margin-top: 20px; }
+        button:hover { background: #3a5a3a; }
+        .hidden { display: none; }
+        #discordLink { word-break: break-all; color: #8af; font-weight: bold; font-size: 1.2em; margin: 20px 0; padding: 15px; background: #1a2a3a; border: 1px dashed #556; }
+        #error { color: #f88; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Последний Рубеж</h1>
+    <p>Автоматические механизмы отключены. Остался последний шаг.</p>
+
+    <div class="box">
+        <p><strong>Введи финальный ключ, полученный в пути:</strong></p>
+        <input type="text" id="keyInput" placeholder="...">
+        <button onclick="checkKey()">Проверить ключ</button>
+        <p id="error"></p>
+    </div>
+
+    <div id="successBox" class="box hidden">
+        <p>Ключ принят. Доступ разрешён.</p>
+        <p>Добро пожаловать. Ты больше не одинок. Используй приглашение ниже:</p>
+        <div id="discordLink">Загрузка...</div>
+        <p><small>Дальнейшие инструкции — там.</small></p>
+        <p><em>Это приглашение действует ограниченное время.</em></p>
+    </div>
+
+    <script>
+        const SECRET_KEY = "resonance";
+        const DISCORD_INVITE_URL = "https://discord.gg/5wkrE8pZ8A";
+        function checkKey() {
+            const userInput = document.getElementById('keyInput').value.trim().toLowerCase();
+            const errorElem = document.getElementById('error');
+            errorElem.textContent = '';
+
+            if (userInput.includes(SECRET_KEY)) {
+            
+                document.querySelector('.box').classList.add('hidden');
+                document.getElementById('successBox').classList.remove('hidden');
+                document.getElementById('discordLink').innerHTML = 
+                    `<a href="${DISCORD_INVITE_URL}" target="_blank">${DISCORD_INVITE_URL}</a>`;
+            } else {
+                errorElem.textContent = 'Ключ не распознан.';
+            }
+        }
+
+        
+        document.getElementById('keyInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') checkKey();
+        });
+    </script>
+</body>
+</html>
